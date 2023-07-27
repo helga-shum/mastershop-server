@@ -5,14 +5,15 @@ export const getAll = async (req, res) => {
 
     const sortWith = req.query.sortBy;
     const categoryId = req.query.category;
-    const { size, fabric, brand, highPrice, lowPrice, search, page, limit } = req.query;
-    const brandArr = brand.split(',');
-    const fabricArr = fabric.split(',');
-    const sizeArr = size.split(',');
+    const { size, fabric, brand, highPrice, lowPrice, search, page, limit } =
+      req.query;
+    const brandArr = brand.split(",");
+    const fabricArr = fabric.split(",");
+    const sizeArr = size.split(",");
 
     sortObject[sortWith] = 1;
     if (search) {
-      field.title = { $regex: `${search}`, $options: 'i' };
+      field.title = { $regex: `${search}`, $options: "i" };
     }
     if (categoryId) {
       field.category = categoryId;
@@ -36,7 +37,7 @@ export const getAll = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      message: 'Can not get products',
+      message: "Can not get products",
     });
   }
 };

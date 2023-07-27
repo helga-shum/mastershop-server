@@ -13,7 +13,9 @@ const router = express.Router({ mergeParams: true });
 // 5. generate tokens
 router.post("/signUp", [
   check("email", "Incorrect email").isEmail(),
-  check("password", "Minimum password length 8 characters").isLength({ min: 8 }),
+  check("password", "Minimum password length 8 characters").isLength({
+    min: 8,
+  }),
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -27,8 +29,7 @@ router.post("/signUp", [
         });
       }
 
-      const { email, password, userName, phone, address, licence} = req.body;
-     
+      const { email, password, userName, phone, address, licence } = req.body;
 
       const exitingUser = await User.findOne({ email });
 
@@ -42,7 +43,7 @@ router.post("/signUp", [
       }
 
       const hashedPassword = await bcrypt.hash(password, 12);
-     
+
       const newUser = await User.create({
         email,
         userName,
@@ -86,8 +87,8 @@ router.post("/signInWithPassword", [
 
       const { email, password } = req.body;
 
-      const existingUser = await User.findOne({email:email });
-      console.log(existingUser)
+      const existingUser = await User.findOne({ email: email });
+      console.log(existingUser);
       if (!existingUser) {
         return res.status(400).send({
           error: {
